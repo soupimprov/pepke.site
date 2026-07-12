@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spencer Pepke</title>
+</head>
+<body style="background-color: rgb(246, 165, 73); color: rgb(60, 42, 38);font-family: Arial, Helvetica, sans-serif;">
+    <div style="text-align:center;">
+    <h1>Spencer Pepke</h1>
+    <ul>
+        <nav style="font-size:120%;font-style: italic;">
+            <a class="active" href="comp.html">Composition</a> &nbsp;&nbsp;
+            <a class="active" href="downloads.html">Downloads</a> &nbsp;&nbsp;
+            <a class="active" href="cv.html">Curriculum Vitae</a> &nbsp;&nbsp;
+            <a class="active" href="lessons.html">Lessons</a> &nbsp;&nbsp;
+            <a class="active" href="contact.html">Contact</a> &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        </nav>
+        <p>*this section is designed for use with a mouse or trackpad*</p>
+        <hr>
+        <h3>drag the singer around the page&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        <p>x-axis: filter frequency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+ <!-- Draggable DIV -->
+ <div id="mydiv" style="position: absolute;
+                        z-index: 9;
+                        text-align: center;
+                        user-select: none;
+                        -moz-user-select: none;
+                        -khtml-user-select: none;
+                        -webkit-user-select: none;
+                        -o-user-select: none;">
+ 
+ <script>// Make the DIV element draggable:
+        let note = 0;
+        let a = 440; //frequency of A
+        
+        var filter = new Tone.Filter(300,"lowpass").toDestination(vol);
+        var vol = new Tone.Volume(-12).toDestination();
+        var osc = new Tone.FMSynth().connect(filter);
+        osc.harmonicity.value = .8;
+
+        function freq(note) {
+               return (a / 32) * (2 ** ((note - 9) / 12));
+        }
+        function go() {
+            osc.triggerAttack(freq(note),".3");
+        }
+        function stop() {
+            osc.triggerRelease(".5");
+        }
+
+    dragElement(document.getElementById("mydiv"));
+    
+    function dragElement(elmnt) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      if (document.getElementById(elmnt.id + "header")) {
+        // if present, the header is where you move the DIV from:
+        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+      } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+      }
+    
+      function dragMouseDown(e) {
+        e = e || window.event;
+        go();
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+    
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        osc.frequency.value = 900 - e.clientY;
+        filter.frequency.value = e.clientX / 2
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
+    
+      function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+        stop();
+      }
+    }
+        
+        /// Getting the note numbers started
+        
+
+
+    </script>
+    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+    <div id="mydivheader" style="
+    cursor: move;
+    color: rgb(0, 0, 0);">ヾ(´〇｀)ﾉ</div>
+  </div> 
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>    
+  <div style="writing-mode: vertical-lr;text-orientation: mixed;transform: rotate(180deg);text-align: right;">
+    <p>y-axis: pitch</p>
+  </div>    
+  
+</body>
+
+</html>
